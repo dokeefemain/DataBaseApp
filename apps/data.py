@@ -2,17 +2,24 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from sklearn import datasets
-
+import pymongo
+#feed
 def app():
-    st.title('Data')
+    myclient = pymongo.MongoClient("mongodb://127.0.0.1:27017")
+    db = myclient['millennials']
+    users = db['users']
+    communities = db['communities']
+    posts = db['posts']
+    comments = db['comments']
+    #post_dict = {  "creationdate": post.created, "title": post.title, "content": bigPosts[count]}
+    threads = posts.find().sort("creationdate", -1)
+    count = 0
+    for x in threads:
+        count+=1
+        st.write(count)
+        title = x.get("title")
+        body = x.get("content")
+        st.write(title)
+        st.write(body)
+        
 
-    st.write("This is the `Data` page of the multi-page app.")
-
-    st.write("The following is the DataFrame of the `iris` dataset.")
-    iris = datasets.load_iris()
-    X = pd.DataFrame(iris.data, columns = iris.feature_names)
-    Y = pd.Series(iris.target, name = 'class')
-    df = pd.concat([X,Y], axis=1)
-    df['class'] = df['class'].map({0:"setosa", 1:"versicolor", 2:"virginica"})
-
-    st.write(df)

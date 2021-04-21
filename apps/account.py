@@ -1,4 +1,5 @@
 import streamlit as st
+import pymongo
 def app():
     #Create account stuff here
     myclient = pymongo.MongoClient("mongodb://127.0.0.1:27017")
