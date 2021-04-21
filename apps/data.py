@@ -13,13 +13,18 @@ def app():
     comments = db['comments']
     #post_dict = {  "creationdate": post.created, "title": post.title, "content": bigPosts[count]}
     threads = posts.find().sort("creationdate", -1)
-    count = 0
+    
     for x in threads:
-        count+=1
-        st.write(count)
+        
+        st.write("Post ID",x.get("creationdate"))
         title = x.get("title")
         body = x.get("content")
+        comment = comments.find({"post_id": str(x.get("creationdate"))})
+        count = 0
         st.write(title)
-        st.write(body)
+        st.write("--",body)
+        for y in comment:
+            count +=1
+            st.write("----",y.get("comment"))
         
 
