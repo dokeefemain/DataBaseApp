@@ -22,7 +22,6 @@ def app():
             threads = posts.find({'username': username_in}).sort("creationdate", -1)
             st.header('Posts created by '+username_in)
             for x in threads:
-                
                 st.write("Post ID",x.get("creationdate"))
                 title = x.get("title")
                 body = x.get("content")
